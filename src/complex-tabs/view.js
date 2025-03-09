@@ -1,25 +1,33 @@
-/**
- * Use this file for JavaScript code that you want to run in the front-end
- * on posts/pages that contain this block.
- *
- * When this file is defined as the value of the `viewScript` property
- * in `block.json` it will be enqueued on the front end of the site.
- *
- * Example:
- *
- * ```js
- * {
- *   "viewScript": "file:./view.js"
- * }
- * ```
- *
- * If you're not making any changes to this file because your project doesn't need any
- * JavaScript running in the front-end, then you should delete this file and remove
- * the `viewScript` property from `block.json`.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
- */
+import { createRoot } from '@wordpress/element';
+import FrontendTabs from './components/FrontendTabs';
+import ThemePalette from './components/ThemePalette';
 
-/* eslint-disable no-console */
-console.log( 'Hello World! (from create-block-complex-tabs block)' );
-/* eslint-enable no-console */
+function initializeReactComponents() {
+  const complexTabsBlocks = document.querySelectorAll('.complex-tabs-block');
+  
+  complexTabsBlocks.forEach(blockElement => {
+
+    if (complexTabsData) {
+      try {
+        //const blockData = JSON.parse(complexTabsData);
+        const reactContainer = document.createElement('div');
+        reactContainer.className = 'complex-tabs-react-container';
+
+        blockElement.innerHTML = '';
+        blockElement.appendChild(reactContainer);
+
+
+        const root = createRoot(reactContainer);
+        root.render(
+            <ThemePalette>
+            <FrontendTabs blockData={complexTabsData} />
+            </ThemePalette>
+        )
+      } catch (error) {
+        console.error('Error initializing Complex Tabs React component:', error);
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initializeReactComponents);

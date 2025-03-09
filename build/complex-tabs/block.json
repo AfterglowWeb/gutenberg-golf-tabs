@@ -90,6 +90,9 @@
           }
         }
       }
+    },
+    "blockId": {
+      "type": "string"
     }
   },
   "textdomain": "complex-tabs",

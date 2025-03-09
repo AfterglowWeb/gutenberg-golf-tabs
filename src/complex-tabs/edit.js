@@ -2,14 +2,12 @@ import { __ } from '@wordpress/i18n';
 import { 
 	useBlockProps, 
 	InspectorControls,
-	RichText,
 	MediaUpload, 
 	MediaUploadCheck
 } from '@wordpress/block-editor';
 import { 
 	PanelBody, 
-	TextControl,
-	ImageControl
+	TextControl
 } from '@wordpress/components';
 import { 
 	useState, 
@@ -21,7 +19,8 @@ import {
 	Tab, 
 	Typography, 
 	Button,
-	Paper
+	Paper,
+	Container
 } from '@mui/material';
 
 import TabContent from './components/TabContent';
@@ -36,6 +35,12 @@ export default function Edit({attributes, setAttributes}) {
         if (!attributes.tabs || !Array.isArray(attributes.tabs)) {
             setAttributes({ tabs: [] });
         }
+
+		if (!attributes.blockId) {
+			setAttributes({ blockId: crypto.randomUUID() });
+		  }
+
+		
     }, []);
 
 	const handleAddTab = () => {
@@ -66,7 +71,6 @@ export default function Edit({attributes, setAttributes}) {
     };
 
     const handleTabValueChange = ( value, key, index ) => {
-		console.log(value, key, index);
         const tabs = [ ...attributes.tabs ];
         tabs[ index ][key] = value;
         setAttributes( { tabs } );
@@ -87,12 +91,6 @@ export default function Edit({attributes, setAttributes}) {
 		setAttributes({ tabs });
 	};
 
-	const handleContentChange = ( value, index ) => {
-		const tabs = [ ...attributes.tabs ];
-		tabs[ index ].content = value;
-		setAttributes( { tabs } );
-	};
-
 	const removeMedia = ( index ) => {
 		const tabs = [ ...attributes.tabs ];
         tabs[ index ].mediaId = 0;
@@ -111,20 +109,6 @@ export default function Edit({attributes, setAttributes}) {
 		setSelectedTab(newValue);
 	  };
 
-	function CustomTabPanel({children, selectedTab, value, index}) {
-	  return (
-		<div
-		  role="tabpanel"
-		  hidden={value !== selectedTab}
-		  id={value}
-		  aria-labelledby={`${index} ${value}`}
-		>
-		  {value === selectedTab && <Paper sx={{ p: 3 }}>{children}</Paper>}
-		</div>
-	  )
-	}
-	
-
 	const tabFields = (attributes.tabs || []).map( ( tab, index ) => {
 		return (<Paper key={ index } className="p-2 mb-4" elevation={3}>
 			
@@ -133,6 +117,7 @@ export default function Edit({attributes, setAttributes}) {
 				<Button 
 				variant="outlined" 
 				size="small" 
+				color="secondary"
 				sx={{textTransform:"none"}} 
 				onClick={() => handleRemoveTab(index)} >
 					{ __( 'Supprimer' ) }
@@ -171,18 +156,27 @@ export default function Edit({attributes, setAttributes}) {
 							allowedTypes={ ['image'] }
 							value={ tab?.mediaId }
 							render={ ( { open } ) => (
-								<Button onClick={ open }>{__('Sélectionner une image')}</Button>
+								<Button color="secondary" className="mb-2 bg-slate-50 aspect-video" onClick={ open }>
+									{tab?.mediaUrl ? 
+										<img src={tab?.mediaUrl} alt={tab?.title || ''} className="w-full h-full object-cover"/>
+										 :
+										__('Sélectionner une image')
+									}
+								</Button>
 							) }
 						/>
 					</MediaUploadCheck>
 					{tab?.mediaId != 0 && 
+					<div className="mt-2">
 						<MediaUploadCheck>
 							<Button 
+							color="secondary"
 							variant="outlined" 
 							size="small" 
 							sx={{textTransform:"none"}} 
 							onClick={() => {removeMedia(index)}}>{__('Supprimer l\'image')}</Button>
 						</MediaUploadCheck>
+					</div>
 					}
 				</PanelBody>
 			</div>
@@ -246,99 +240,37 @@ export default function Edit({attributes, setAttributes}) {
 		return <Tab 
 		key={index}
 		label={
-			<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-			{tab?.title && (
-				<Typography component="span" variant="title" fontWeight="medium">
-				{tab.title}
-				</Typography>
-			)}
-			{tab?.subtitle && (
-				<Typography component="span" variant="subtitle1" fontWeight="medium">
-				{tab.subtitle}
-				</Typography>
-			)}
-			{tab?.meta_1 && (
-				<Typography component="span" variant="body2" color="text.secondary">
-				{tab.meta_1}
-				</Typography>
-			)}
-			{tab?.meta_2 && (
-				<Typography component="span" variant="body2" color="text.secondary">
-				{tab.meta_2}
-				</Typography>
-			)}
+			<Box sx={{ height:'100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
+				<span className="block">
+				{tab?.title && (
+					<span className="block normal-case font-bold text-xl md:text-4xl lg:text-5xl text-slate-900">
+					{tab.title}
+					</span>
+				)}
+				{tab?.subtitle && (
+					<span className="block normal-case font-regular text-xl md:text-4xl lg:text-5xl text-teal-700">
+					{tab.subtitle}
+					</span>
+				)}
+				</span>
+
+				<span className="block">
+				{tab?.meta_1 && (
+					<span className="block font-regular text-md text-slate-500">
+					{tab.meta_1}
+					</span>
+				)}
+				{tab?.meta_2 && (
+					<span className="block font-regular text-md text-slate-500">
+					{tab.meta_2}
+					</span>
+				)}
+				</span>
 			</Box>
 		}
 		>
 		</Tab>;
 	} );
-/*
-	const tabContents = (attributes.tabs || []).map( ( tab, index ) => {
-
-
-			const content = editingContent !== null && editingContent.index === index 
-			? editingContent.content 
-			: tab?.content || '';
-
-
-			return(
-				<CustomTabPanel 
-				key={'panel-' + index + tab.title} 
-				selectedTab={selectedTab} 
-				value={index} 
-				index={index}>
-					
-					<div className="flex justify-between">
-						<div>
-							{tab.title && <p>{tab.title}</p>}
-							{tab.subtitle && <p>{tab.subtitle}</p>}
-						</div>
-						<div>
-							{tab.meta_1 && <p>{tab.meta_1}</p>}
-							{tab.meta_2 && <p>{tab.meta_2}</p>}
-						</div>
-					</div>
-				
-					<div className="flex justify-start gap-4">
-						<div className="w-1/2">
-							<RichText
-							tagName="p"
-							placeholder={ __( 'Écrivez ici.' ) }
-							value={content}
-							allowedFormats={ [ 'core/bold', 'core/italic' ] }
-							onBlur={(value, index) => { handleTabValueChange(value, 'content', index) }}
-							/>
-						</div>
-						
-						<div className="w-1/2 h-1/2">
-							{tab.mediaUrl && <img src={tab.mediaUrl} alt={tab.title} className="w-full h-full object-cover" />}
-						</div>
-					</div>
-					{tab.starts && 
-					<div className="flex gap-2">
-						{tab.starts.white && <span 
-						className="block p-1 text-center rounded-lg border-2 border-solid border-slate-200 bg-white"
-						>{tab.starts.white}</span>}
-
-						{tab.starts.yellow && <span 
-						className="block p-1 text-center rounded-lg border-2 border-solid border-slate-200 bg-yellow-400"
-						>{tab.starts.yellow}</span>}
-
-						{tab.starts.blue && <span 
-						className="block p-1 text-center rounded-lg border-2 border-solid border-slate-200 bg-blue-400"
-						>{tab.starts.blue}</span>}
-
-						{tab.starts.red && <span 
-						className="block p-1 text-center rounded-lg border-2 border-solid border-slate-200 bg-red-400"
-						>{tab.starts.red}</span>}
-
-						{tab.starts.orange && <span 
-						className="block p-1 text-center rounded-lg border-2 border-solid border-slate-200 bg-orange-400"
-						>{tab.starts.orange}</span>}
-					</div>}
-				</CustomTabPanel>
-			)
-	} );*/
 
 	return (
 		<>
@@ -348,16 +280,17 @@ export default function Edit({attributes, setAttributes}) {
 					<Button 
 					variant="contained" 
 					size="small" 
-					color="info"
+					color="secondary"
 					sx={{textTransform:"none"}}
 					onClick={handleAddTab} >
 						{ __( 'Ajouter un onglet' ) }
 					</Button>
 				</PanelBody>
 			</InspectorControls>
-
-			<div { ...useBlockProps() }>
+			
+			<div { ...useBlockProps() } className="p-4 md:p-6 lg:p-8 bg-primary-light">
 	
+				<Container maxWidth="xl">
 				<Tabs
 				value={selectedTab}
 				onChange={handleTabChange}
@@ -382,6 +315,7 @@ export default function Edit({attributes, setAttributes}) {
 						handleTabValueChange={handleTabValueChange}
 					/>
 				))}
+				</Container>
 			</div>
 
 		</>

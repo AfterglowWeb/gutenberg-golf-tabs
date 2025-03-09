@@ -25,7 +25,7 @@
 			"type": "string",
 			"default": ""
 		},
-		"tabs": {
+			"tabs": {
 			"type": "array",
 			"default": [],
 			"items": {
@@ -88,6 +88,9 @@
 					}
 				}
 			}
+		},
+		"blockId": {
+			"type": "string"
 		}
 	},
 	"textdomain": "complex-tabs",
