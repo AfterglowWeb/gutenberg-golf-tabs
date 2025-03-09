@@ -1,0 +1,30 @@
+{
+	"name": "complex-tabs",
+	"version": "0.1.0",
+	"description": "Example block scaffolded with Create Block tool.",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --webpack-copy-php",
+		"tailwind": "tailwindcss -i ./src/complex-tabs/input.css -o ./build/complex-tabs/output.css --watch"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.12.0"
+	},
+	"dependencies": {
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.0",
+		"@mui/icons-material": "^6.4.7",
+		"@mui/material": "^6.4.7",
+		"@tailwindcss/cli": "^4.0.12",
+		"@wordpress/icons": "^10.19.0",
+		"tailwindcss": "^4.0.12"
+	}
+}

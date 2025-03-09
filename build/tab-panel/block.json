@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "complex-tabs/tab-panel",
+  "title": "Tab Panel",
+  "category": "widgets",
+  "parent": [
+    "complex-tabs/complex-tabs"
+  ],
+  "icon": "table-row-after",
+  "description": "Content for a single tab",
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "tabId": {
+      "type": "number",
+      "default": 0
+    },
+    "isPrimary": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "usesContext": [
+    "complex-tabs/selectedTab"
+  ]
+}

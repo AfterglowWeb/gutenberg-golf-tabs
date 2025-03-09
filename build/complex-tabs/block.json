@@ -1,0 +1,101 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "create-block/complex-tabs",
+  "version": "0.1.0",
+  "title": "Complex Tabs",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "innerBlocks": true
+  },
+  "providesContext": {
+    "create-block/selectedTab": "selectedTab"
+  },
+  "allowedBlocks": [
+    "complex-tabs/tab-panel"
+  ],
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "subtitle": {
+      "type": "string",
+      "default": ""
+    },
+    "tabs": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "default": ""
+          },
+          "subtitle": {
+            "type": "string",
+            "default": ""
+          },
+          "meta_1": {
+            "type": "string",
+            "default": ""
+          },
+          "meta_2": {
+            "type": "string",
+            "default": ""
+          },
+          "content": {
+            "type": "string",
+            "source": "html",
+            "default": ""
+          },
+          "mediaId": {
+            "type": "number",
+            "default": 0
+          },
+          "mediaUrl": {
+            "type": "string",
+            "default": ""
+          },
+          "starts": {
+            "type": "object",
+            "default": {},
+            "properties": {
+              "white": {
+                "type": "number",
+                "default": 0
+              },
+              "yellow": {
+                "type": "number",
+                "default": 0
+              },
+              "blue": {
+                "type": "number",
+                "default": 0
+              },
+              "red": {
+                "type": "number",
+                "default": 0
+              },
+              "orange": {
+                "type": "number",
+                "default": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "textdomain": "complex-tabs",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./output.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}
