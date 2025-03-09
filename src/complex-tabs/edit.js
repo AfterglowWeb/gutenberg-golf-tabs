@@ -13,16 +13,12 @@ import {
 	useState, 
 	useEffect
 } from '@wordpress/element';
-import { 
-	Box, 
-	Tabs, 
-	Tab, 
-	Typography, 
-	Button,
-	Paper,
-	Container
-} from '@mui/material';
-
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
 import TabContent from './components/TabContent';
 
 export default function Edit({attributes, setAttributes}) {
