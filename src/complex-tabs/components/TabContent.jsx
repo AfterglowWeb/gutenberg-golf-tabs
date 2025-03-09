@@ -27,7 +27,7 @@ const MemoizedRichText = memo(function RichTextEditor({
   return (
     <RichText
       tagName="p"
-      placeholder={__('Écrivez ici.')}
+      placeholder="Écrivez ici."
       value={content}
       allowedFormats={['core/bold', 'core/italic']}
       onChange={(value) => {
@@ -102,7 +102,7 @@ function TabContent({
           />
           <div>
             <h3 className="py-4">
-              <span className="block text-lg font-bold">{__('Départs')}</span>
+              <span className="block text-lg font-bold">Départs</span>
             </h3>
             {tab.starts && 
               <div className="flex gap-2 font-regular text-sm">
@@ -150,7 +150,7 @@ function TabContent({
           </div>
         </div>   
         <div className="w-full md:w-1/2 p-2">
-            <div className="aspect-video">
+          <div className="aspect-video">
             <div 
             className="relative cursor-pointer"
             onClick={() => setOpen(true)}
@@ -168,7 +168,7 @@ function TabContent({
                 variant="extended"
                 sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10, textTransform:'capitalize'}}
               >
-                {__('Détail')}
+                Détail
                 <AddIcon />
               </Fab>
             </div>
@@ -186,7 +186,7 @@ function TabContent({
                 />
               </DialogContent>
               <DialogActions>
-                <Button variant="contained" onClick={() => setOpen(false)}>{__('Fermer')}</Button>
+                <Button variant="contained" onClick={() => setOpen(false)}>Fermer</Button>
               </DialogActions>
             </Dialog>
         </div>

@@ -1,13 +1,14 @@
 <?php
 /**
- * Plugin Name:       Complex Tabs
- * Description:       Example block scaffolded with Create Block tool.
- * Version:           0.1.0
+ * Plugin Name:       Golf Tabs
+ * Description:       Material UI Tabs Block Dedicated to Golf Courses
+ * Version:           1.0.0b
  * Requires at least: 6.7
  * Requires PHP:      7.4
- * Author:            The WordPress Contributors
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Author:            Cédric Moris Kelly
+ * Author URI:        http://moriskelly.com
+ * License:           GPL-3.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       complex-tabs
  *
  * @package CreateBlock

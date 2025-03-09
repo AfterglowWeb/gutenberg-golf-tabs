@@ -1,21 +1,16 @@
-
-import React, { useState } from 'react';
-import { 
-  Box, 
-  Tabs, 
-  Tab, 
-  Typography, 
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Paper,
-  Fab,
-  Container
-} from '@mui/material';
+import { useState } from '@wordpress/element';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Container from '@mui/material/Container';
+import Fab from '@mui/material/Fab';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import AddIcon from '@mui/icons-material/Add';
-import ThemePalette from './ThemePalette';
 
 
 function CustomTabPanel(props) {
@@ -40,18 +35,11 @@ function CustomTabPanel(props) {
 
 export default function FrontendTabs({ blockData }) {
   const [activeTab, setActiveTab] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState({ url: '', title: '' });
-  
   const tabs = blockData?.tabs || [];
+  const [open, setOpen] = useState(false);
   
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
-  };
-  
-  const openModal = (url, title) => {
-    setModalImage({ url, title });
-    setModalOpen(true);
   };
   
   if (tabs.length === 0) {
@@ -60,6 +48,7 @@ export default function FrontendTabs({ blockData }) {
   
   return (
     <Container maxWidth="xl">
+      
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
@@ -161,80 +150,52 @@ export default function FrontendTabs({ blockData }) {
                 )}
               </div>
               
-              {tab.mediaUrl && (
-                <div className="w-full md:w-1/2 p-2">
-                  <div className="aspect-video">
-                    <div 
-                      className="relative cursor-pointer"
-                      onClick={() => openModal(tab.mediaUrl, tab.title)}
-                    >
+              <div className="w-full md:w-1/2 p-2">
+                <div className="aspect-video">
+                  <div 
+                  className="relative cursor-pointer"
+                  onClick={() => setOpen(true)}
+                  >
+                    {tab.mediaUrl && (
                       <img 
                         src={tab.mediaUrl} 
                         alt={tab.title || ''} 
                         className="aspect-video object-cover" 
                       />
-                      <Fab 
-                        color="primary" 
-                        size="small"
-                        variant="extended"
-                        sx={{
-                          position: 'absolute', 
-                          top: '50%', 
-                          left: '50%', 
-                          transform: 'translate(-50%, -50%)', 
-                          zIndex: 10, 
-                          textTransform: 'capitalize'
-                        }}
-                      >
-                        Détail
-                        <AddIcon />
-                      </Fab>
-                    </div>
+                    )}
+                    <Fab 
+                      color="primary" 
+                      size="small"
+                      variant="extended"
+                      sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10, textTransform:'capitalize'}}
+                    >
+                      Détail
+                      <AddIcon />
+                    </Fab>
                   </div>
-                </div>
-              )}
+                  </div>
+                  <Dialog
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    keepMounted={true}
+                  >
+                    <DialogTitle>{tab.title} {tab.subtitle}</DialogTitle>
+                    <DialogContent dividers>
+                      <img 
+                        src={tab.mediaUrl} 
+                        alt={tab.title || ''} 
+                        className="max-h-[70svh] h-[70svh] w-auto object-contain"
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button variant="contained" onClick={() => setOpen(false)}>Fermer</Button>
+                    </DialogActions>
+                  </Dialog>
+              </div>
             </div>
-        </CustomTabPanel>
+          </CustomTabPanel>
       ))}
       
-      <Dialog
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        maxWidth="md"
-        fullWidth={true}
-        sx={{
-          '& .MuiDialog-paper': {
-            maxHeight: '90vh',
-          }
-        }}
-      >
-        <DialogTitle>{modalImage.title}</DialogTitle>
-        <DialogContent 
-          dividers
-          sx={{ 
-            padding: 0,
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            maxHeight: '70vh'
-          }}
-        >
-          <img 
-            src={modalImage.url} 
-            alt={modalImage.title || ''} 
-            style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
-              objectFit: 'contain',
-              display: 'block'
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" onClick={() => setModalOpen(false)}>Fermer</Button>
-        </DialogActions>
-      </Dialog>
       </Container>
   );
 }
