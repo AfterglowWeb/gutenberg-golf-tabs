@@ -108,8 +108,8 @@
 					"default": ""
 				},
 				"mediaId": {
-					"type": "string",
-					"default": ""
+					"type": "number",
+					"default": 0
 				},
 				"mediaUrl": {
 					"type": "string",
@@ -123,9 +123,9 @@
 					"type": "string",
 					"default": ""
 				},
-				"title": {
-					"type": "string",
-					"default": ""
+				"isParallax": {
+					"type": "boolean",
+					"default": false
 				}
 			}
 		}

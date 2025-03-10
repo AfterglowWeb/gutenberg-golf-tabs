@@ -309,6 +309,9 @@
   .aspect-video {
     aspect-ratio: var(--aspect-video);
   }
+  .h-1 {
+    height: calc(var(--spacing) * 1);
+  }
   .h-\[70svh\] {
     height: 70svh;
   }
@@ -326,6 +329,9 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
+  }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
   }
   .w-\[150\%\] {
     width: 150%;
@@ -491,8 +497,14 @@
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
+  .pt-24 {
+    padding-top: calc(var(--spacing) * 24);
+  }
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
+  }
+  .pb-36 {
+    padding-bottom: calc(var(--spacing) * 36);
   }
   .text-center {
     text-align: center;
@@ -611,6 +623,12 @@
       padding: calc(var(--spacing) * 6);
     }
   }
+  .md\:text-2xl {
+    @media (width >= 48rem) {
+      font-size: var(--text-2xl);
+      line-height: var(--tw-leading, var(--text-2xl--line-height));
+    }
+  }
   .md\:text-4xl {
     @media (width >= 48rem) {
       font-size: var(--text-4xl);
@@ -620,6 +638,17 @@
   .lg\:p-8 {
     @media (width >= 64rem) {
       padding: calc(var(--spacing) * 8);
+    }
+  }
+  .lg\:px-8 {
+    @media (width >= 64rem) {
+      padding-inline: calc(var(--spacing) * 8);
+    }
+  }
+  .lg\:text-4xl {
+    @media (width >= 64rem) {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
     }
   }
   .lg\:text-5xl {
