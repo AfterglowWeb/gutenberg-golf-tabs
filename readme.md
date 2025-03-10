@@ -22,11 +22,11 @@ Complex Tabs provides a feature-rich Gutenberg block for creating beautiful, res
 - **Interactive Interface** - Smooth tab transitions and responsive design
 - **Media Integration** - Add images to each tab with lightbox preview on the frontend
 - **Golf-Specific Data** - Built-in support for Tee distances with color-coded indicators:
+  - White
   - Yellow
   - Blue
   - Red
   - Orange
-  - White
 - **Consistent Design** - Same appearance in both editor and frontend
 - **Modern Architecture** - Built with React and seamlessly integrated with Gutenberg
 

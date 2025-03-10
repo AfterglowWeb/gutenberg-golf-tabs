@@ -3,10 +3,16 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
+$title = isset($attributes['title']) ? $attributes['title'] : '';
+$subtitle = isset($attributes['subtitle']) ? $attributes['subtitle'] : '';
 $tabs = isset($attributes['tabs']) ? $attributes['tabs'] : [];
 $block_id = isset($attributes['blockId']) ? $attributes['blockId'] : '';
+$background = isset($attributes['background']) ? $attributes['background'] : '';
 
 $block_data = [
+    'title' => $title,
+    'subtitle' => $subtitle,
+    'background' => $background,
 	'tabs' => $tabs,
 	'blockId' => $block_id
   ];
@@ -16,12 +22,46 @@ $serialized_data = wp_json_encode($block_data);
 	var complexTabsData = <?php echo $serialized_data; ?>;			
 </script>
 <div <?php echo get_block_wrapper_attributes(['class' => 'complex-tabs-block p-4 md:p-6 lg:p-8 bg-primary-light']); ?> id="block-<?php echo esc_attr($block_id); ?>" data-uuid="<?php echo esc_attr($block_id); ?>">
+    
+
     <?php if (empty($tabs)) : ?>
         <div class="complex-tabs-empty">
             <?php esc_html_e('No tabs available.', 'complex-tabs'); ?>
         </div>
     <?php else : ?>
         <div class="container mx-auto xl:max-w-screen-xl">
+
+            <!-- Background Image -->
+            <?php if ( !empty($background) ) : ?>
+                <?php if ( isset($background["type"]) && isset($background["url"] ) ) : ?>
+                        <?php if ('video' === $background["type"]) : ?>
+                        <div class="complex-tabs-background">
+                            <video autoplay muted loop playsinline>
+                                <source src="<?php echo esc_url($background["url"]); ?>" type="video/mp4" />
+                            </video>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ('image' === $background["type"]) : ?>
+                        <div class="complex-tabs-background">
+                            <img src="<?php echo esc_url($background["url"]); ?>" alt="<?php esc_attr_e('Background Image', 'complex-tabs'); ?>" />
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+               
+            <!-- Block Title -->
+            <?php if (!empty($title)) : ?>
+                <h2 class=" text-secondary font-bold text-3xl lg:text-[40px] lg:leading-[50px] mb-0">
+                    <?php esc_html_e($title); ?>
+                </h2>
+            <?php endif; ?>
+            <?php if (!empty($subtitle)) : ?>
+				<p class="font-bold text-xl text-[30px] mb-0">
+                    <strong><?php esc_html_e($subtitle); ?></strong>
+				</p>
+            <?php endif; ?>
+            
+
             <!-- Tab Navigation -->
             <div class="complex-tabs-nav mb-3 overflow-x-auto" role="tablist">
                 <?php foreach ($tabs as $index => $tab) : 
