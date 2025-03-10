@@ -28,20 +28,27 @@ export default function Edit({attributes, setAttributes}) {
 	
 	const [selectedTab, setSelectedTab] = useState(0);
 	const [editingContent, setEditingContent] = useState(null);
-	const [isParallax, setParallax] = useState(false);
-
 
 	useEffect(() => {
         if (!attributes.tabs || !Array.isArray(attributes.tabs)) {
             setAttributes({ tabs: [] });
         }
 
+		if (!attributes.background || typeof attributes.background !== 'object') {
+            setAttributes({ background: {
+				isParallax: false,
+				mediaId: 0,
+				mediaUrl: '',
+				mediaType: '',
+				mediaAlt: ''
+			} });
+        }
+
 		if (!attributes.blockId) {
 			setAttributes({ blockId: crypto.randomUUID() });
 		  }
 
-		
-    }, []);
+    }, [attributes.tabs, attributes.background, setAttributes]);
 
 	const handleAddTab = () => {
         const tabs = [ ...attributes.tabs || [] ];
@@ -111,11 +118,15 @@ export default function Edit({attributes, setAttributes}) {
         setAttributes( { tabs } );
 	}
 
-	const handleTabChange = (event, newValue) => {
-		setSelectedTab(newValue);
+	const handleTabChange = (event, value) => {
+		setSelectedTab(value);
 	  };
 
 	const onSelectMedia = (media, key) => {
+		if (!media || !media.id) {
+			console.error('Invalid media object received', media);
+			return;
+		}
 		setAttributes({
 			[key]: {
 				isParallax: attributes[key]?.isParallax || false,
@@ -131,6 +142,7 @@ export default function Edit({attributes, setAttributes}) {
 	const removeMedia = (key) => {
 		setAttributes({
 			[key]: {
+				isParallax: attributes[key]?.isParallax || false,
 				mediaId: 0,
 				mediaUrl: '',
 				mediaType: '',
@@ -270,7 +282,7 @@ export default function Edit({attributes, setAttributes}) {
 		return <Tab 
 		key={index}
 		label={
-			<Box sx={{ height:'100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
+			<Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
 				<span className="block">
 				{tab?.title && (
 					<span className="block normal-case font-bold text-xl md:text-4xl lg:text-5xl text-slate-900">
@@ -337,7 +349,7 @@ export default function Edit({attributes, setAttributes}) {
 						render={ ( { open } ) => (
 							<Button color="secondary" className="mb-2 bg-slate-50 aspect-video" onClick={ open }>
 								{attributes.background?.mediaUrl ? 
-									<img src={attributes.background?.mediaUrl} alt={attributes.background?.title || ''} className="w-full h-full object-cover"/>
+									<img src={attributes.background?.mediaUrl} alt={attributes.background?.mediaAlt || ''} className="w-full h-full object-cover"/>
 										:
 									__('Sélectionner une image')
 								}
@@ -386,30 +398,36 @@ export default function Edit({attributes, setAttributes}) {
 						{attributes.subtitle && <p className="font-bold text-xl text-[30px] mb-0">
 							<strong>{attributes.subtitle}</strong>
 						</p>}
-						<Tabs
-						value={selectedTab}
-						onChange={handleTabChange}
-						variant="scrollable"
-						scrollButtons="auto"
-						aria-label="detailed list tabs"
-						sx={{
-							mb: 3
-						}}
-						>
-							{tabNavigationItems}
-						</Tabs>
+						
+						<Box sx={({theme}) => ({
+							backgroundColor: "white",
+							borderRadius: '2px',
+						})}>
+							<Tabs
+							value={selectedTab}
+							onChange={handleTabChange}
+							variant="scrollable"
+							scrollButtons="auto"
+							aria-label="detailed list tabs"
+							sx={{
+								mb: 3
+							}}
+							>
+								{tabNavigationItems}
+							</Tabs>
 
-						{attributes.tabs?.map((tab, index) => (
-							<TabContent
-								key={index}
-								tab={tab}
-								index={index}
-								selectedTab={selectedTab}
-								editingContent={editingContent}
-								setEditingContent={setEditingContent}
-								handleTabValueChange={handleTabValueChange}
-							/>
-						))}
+							{attributes.tabs?.map((tab, index) => (
+								<TabContent
+									key={index}
+									tab={tab}
+									index={index}
+									selectedTab={selectedTab}
+									editingContent={editingContent}
+									setEditingContent={setEditingContent}
+									handleTabValueChange={handleTabValueChange}
+								/>
+							))}
+						</Box>
 					</Container>
 				</div>
 			</ParallaxProvider>

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Golf Tabs
  * Description:       Material UI Tabs Block Dedicated to Golf Courses
- * Version:           1.0.0b
+ * Version:           1.0.1b
  * Requires at least: 6.7
  * Requires PHP:      7.4
  * Author:            Cédric Moris Kelly

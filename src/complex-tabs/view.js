@@ -1,6 +1,7 @@
 import { createRoot } from '@wordpress/element';
 import FrontendTabs from './components/FrontendTabs';
 import ThemePalette from './components/ThemePalette';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 function initializeReactComponents() {
   const complexTabsBlocks = document.querySelectorAll('.complex-tabs-block');
@@ -9,19 +10,13 @@ function initializeReactComponents() {
 
     if (complexTabsData) {
       try {
-        //const blockData = JSON.parse(complexTabsData);
-        const reactContainer = document.createElement('div');
-        reactContainer.className = 'complex-tabs-react-container';
-
-        blockElement.innerHTML = '';
-        blockElement.appendChild(reactContainer);
-
-
-        const root = createRoot(reactContainer);
+        const root = createRoot(blockElement);
         root.render(
-            <ThemePalette>
-            <FrontendTabs blockData={complexTabsData} />
-            </ThemePalette>
+          <ThemePalette>
+            <ParallaxProvider>
+              <FrontendTabs blockData={complexTabsData} />
+            </ParallaxProvider>
+          </ThemePalette>
         )
       } catch (error) {
         console.error('Error initializing Complex Tabs React component:', error);
