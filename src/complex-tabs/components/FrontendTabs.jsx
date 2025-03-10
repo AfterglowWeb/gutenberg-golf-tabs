@@ -35,12 +35,16 @@ function CustomTabPanel(props) {
 
 export default function FrontendTabs({ blockData }) {
   const [activeTab, setActiveTab] = useState(0);
-  const tabs = blockData?.tabs || [];
+  const {title, subtitle, tabs} = blockData;
   const [open, setOpen] = useState(false);
   
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
+
+  if (!tabs) {
+    return <div>No tabs available.</div>;
+  }
   
   if (tabs.length === 0) {
     return <div>No tabs available.</div>;
@@ -48,7 +52,19 @@ export default function FrontendTabs({ blockData }) {
   
   return (
     <Container maxWidth="xl">
-      
+      {(title || subtitle) && 
+      <Box className="text-center mb-8 max-w-2xl w-full mx-auto "> 
+          {title && <Box 
+          component='h2' 
+          sx={{color:'secondary.main'}} 
+          className={`font-bold text-3xl lg:text-[40px] lg:leading-[50px] mb-0`}>
+            {title}
+          </Box>}
+
+          {subtitle && <p className="font-bold text-xl text-[30px] mb-0">
+              <strong>{subtitle}</strong>
+          </p>}
+      </Box>}
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
