@@ -62,6 +62,14 @@
             "type": "string",
             "default": ""
           },
+          "mediaType": {
+            "type": "string",
+            "default": ""
+          },
+          "mediaAlt": {
+            "type": "string",
+            "default": ""
+          },
           "starts": {
             "type": "object",
             "default": {},
@@ -93,6 +101,35 @@
     },
     "blockId": {
       "type": "string"
+    },
+    "background": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "default": ""
+        },
+        "mediaId": {
+          "type": "number",
+          "default": 0
+        },
+        "mediaUrl": {
+          "type": "string",
+          "default": ""
+        },
+        "mediaType": {
+          "type": "string",
+          "default": ""
+        },
+        "mediaAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "isParallax": {
+          "type": "boolean",
+          "default": false
+        }
+      }
     }
   },
   "textdomain": "complex-tabs",

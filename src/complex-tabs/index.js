@@ -4,10 +4,13 @@ import Edit from './edit';
 import metadata from './block.json';
 import './fonts.css';
 import ThemePalette from './components/ThemePalette';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 const EditWithTheme = (props) => (
 	<ThemePalette>
-	  <Edit {...props} />
+		<ParallaxProvider>
+			<Edit {...props} />
+		</ParallaxProvider>
 	</ThemePalette>
   );
 

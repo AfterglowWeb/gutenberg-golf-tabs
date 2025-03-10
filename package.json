@@ -1,6 +1,6 @@
 {
 	"name": "complex-tabs",
-	"version": "1.0.0b",
+	"version": "1.0.1b",
 	"description": "Material UI Tabs Block Dedicated to Golf Courses",
 	"author": "Cédric Moris Kelly",
 	"license": "GPL-3.0-or-later",
@@ -25,6 +25,7 @@
 		"@emotion/react": "^11.14.0",
 		"@emotion/styled": "^11.14.0",
 		"@mui/icons-material": "^6.4.7",
-		"@mui/material": "^6.4.7"
+		"@mui/material": "^6.4.7",
+		"react-scroll-parallax": "^3.4.5"
 	}
 }
