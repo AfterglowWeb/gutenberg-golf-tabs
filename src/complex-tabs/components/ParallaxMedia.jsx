@@ -6,7 +6,7 @@ import { useParallax, useParallaxController } from 'react-scroll-parallax';
 export default function ParallaxImage(props) {
 
     const {src} = props;
-    const { ref } = useParallax({ speed: 10 });
+    const { ref } = useParallax({ speed: 10, scale: [.9, 1.2] });
     const parallaxController = useParallaxController();
         
     if (!src) {

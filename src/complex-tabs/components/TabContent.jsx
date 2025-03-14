@@ -100,6 +100,7 @@ function TabContent({
             setEditingContent={setEditingContent}
             handleTabValueChange={handleTabValueChange}
           />
+          {tab.starts && Object.values(tab.starts).some(val => val !== 0) && (
           <div>
             <h3 className="py-4">
               <span className="block text-lg font-bold">Départs</span>
@@ -147,7 +148,8 @@ function TabContent({
                 )}
               </div>
             }
-          </div>
+          </div>)
+          }
         </div>   
         <div className="w-full md:w-1/2 p-2">
           <div className="aspect-video">
