@@ -13,6 +13,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import SectionBackground from './SectionBackground';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 function CustomTabPanel(props) {
@@ -38,7 +39,7 @@ function CustomTabPanel(props) {
 export default function FrontendTabs({ blockData }) {
 
   const [activeTab, setActiveTab] = useState(0);
-  const {title, subtitle, tabs} = blockData;
+  const {title, subtitle, tabs, background} = blockData;
   const [open, setOpen] = useState(false);
   
   const handleTabChange = (event, newValue) => {
@@ -56,7 +57,7 @@ export default function FrontendTabs({ blockData }) {
   return (
   <Box 
   component="section"
-  className={`complex-tabs-block w-full overflow-hidden relative bg-slate-50 px-4 lg:px-8 pt-24 pb-36 bg-primary-light`}
+  className={`complex-tabs-block w-full overflow-hidden relative bg-slate-50 px-4 lg:px-8 pt-12 pb-18 md:pt-24 md:pb-36 bg-primary-light`}
   >
     <SectionBackground {...blockData} />
     <Container maxWidth="xl" sx={{position: 'relative', zIndex: 10}}>
@@ -64,21 +65,9 @@ export default function FrontendTabs({ blockData }) {
       {(title || subtitle) && 
       <Box className="text-center mb-8 max-w-2xl w-full mx-auto "> 
           {title && 
-          <Typography 
-            variant="h2" 
-            component="h2"
-            sx={{
-              color: 'white',
-              fontWeight: 700,
-              fontSize: { xs: '1.4rem', sm: '2rem', md: '3rem' },
-              mb: 3,
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-              letterSpacing: '0.02em',
-            }}
-          >
+          <h3 className={`font-bold ${background?.mediaUrl ? 'text-white' : 'text-secondary'} text-3xl lg:text-[40px] lg:leading-[50px] mb-0`}>
             {title}
-          </Typography>
-          }
+          </h3>}
 
           {subtitle && <p className="font-bold text-xl text-[30px] mb-0">
               <strong>{subtitle}</strong>
@@ -151,8 +140,7 @@ export default function FrontendTabs({ blockData }) {
               <div className="flex justify-start flex-wrap border-y border-slate-50">
                 <div className="w-full md:w-1/2 p-2 flex flex-col gap-4 justify-between">
                   <div dangerouslySetInnerHTML={{ __html: tab.content }} />
-                  
-                  {tab.starts && Object.values(tab.starts).some(val => val > 0) && (
+                  {tab.starts && Object.values(tab.starts).some(val => val !== 0) && (
                     <div>
                       <h3 className="py-4">
                         <span className="block text-lg font-bold">Départs</span>
@@ -193,44 +181,44 @@ export default function FrontendTabs({ blockData }) {
                 
                 <div className="w-full md:w-1/2 p-2">
                   <div className="aspect-video">
-                    <div 
-                    className="relative cursor-pointer"
-                    onClick={() => setOpen(true)}
-                    >
-                      {tab.mediaUrl && (
+                    {tab.mediaUrl && (
+                      <div 
+                      className="relative cursor-pointer"
+                      onClick={() => setOpen(true)}
+                      >
                         <img 
                           src={tab.mediaUrl} 
                           alt={tab.title || ''} 
                           className="aspect-video object-cover" 
                         />
-                      )}
-                      <Fab 
-                        color="primary" 
-                        size="small"
-                        variant="extended"
-                        sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10, textTransform:'capitalize'}}
-                      >
-                        Détail
-                        <AddIcon />
-                      </Fab>
-                    </div>
+                        <Fab 
+                          color="primary" 
+                          size="small"
+                          sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10, textTransform:'capitalize'}}
+                        >
+                          <AddIcon />
+                        </Fab>
+                      </div>)
+                    }
                     </div>
                     <Dialog
                       open={open}
                       onClose={() => setOpen(false)}
                       keepMounted={true}
+                      fullScreen={true}
                     >
-                      <DialogTitle>{tab.title} {tab.subtitle}</DialogTitle>
-                      <DialogContent dividers>
+                      <DialogTitle sx={{display: 'flex', flexWrap:'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <span className="block overflow-hidden truncate">{tab.title} {tab.subtitle}</span>
+                        <Fab size="small" color="primary" onClick={() => setOpen(false)}><CloseIcon /></Fab>
+                      </DialogTitle>
+                      <DialogContent dividers sx={{display: 'flex', justifyContent: 'center'}}>
                         <img 
                           src={tab.mediaUrl} 
                           alt={tab.title || ''} 
-                          className="max-h-[70svh] h-[70svh] w-auto object-contain"
+                          className="max-h-full h-full w-auto object-contain"
                         />
                       </DialogContent>
-                      <DialogActions>
-                        <Button variant="contained" onClick={() => setOpen(false)}>Fermer</Button>
-                      </DialogActions>
+                      <DialogActions />
                     </Dialog>
                 </div>
               </div>

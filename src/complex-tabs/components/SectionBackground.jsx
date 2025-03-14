@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import ParallaxMedia from './ParallaxMedia';
 
 export default function SectionBackground(props) {
-    console.log('SectionBackground', props);
+
     const {background} = props;   
     if (!background) {
         return null;

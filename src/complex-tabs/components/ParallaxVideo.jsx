@@ -5,8 +5,6 @@ import { useParallax, useParallaxController } from 'react-scroll-parallax';
 
 export default function ParallaxVideo(props) {
 
-    console.log(props);
-
     const {src} = props;
     const { ref } = useParallax({ speed: 10 });
     const parallaxController = useParallaxController();
