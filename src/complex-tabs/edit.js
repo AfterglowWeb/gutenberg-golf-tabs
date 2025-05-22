@@ -24,8 +24,8 @@ import TabContent from './components/TabContent';
 import SectionBackground from './components/SectionBackground';
 import { ParallaxProvider } from 'react-scroll-parallax';
 
-export default function Edit({attributes, setAttributes}) {
-	
+export default function Edit({attributes, setAttributes, clientId}) {
+
 	const [selectedTab, setSelectedTab] = useState(0);
 	const [editingContent, setEditingContent] = useState(null);
 
@@ -45,7 +45,7 @@ export default function Edit({attributes, setAttributes}) {
         }
 
 		if (!attributes.blockId) {
-			setAttributes({ blockId: crypto.randomUUID() });
+			setAttributes({ blockId: clientId });
 		  }
 
     }, [attributes.tabs, attributes.background, setAttributes]);
@@ -383,10 +383,10 @@ export default function Edit({attributes, setAttributes}) {
 				</PanelBody>
 			</InspectorControls>
 			
-			<ParallaxProvider>
-				<div { ...useBlockProps() } className="p-4 md:p-6 lg:p-8 bg-primary-light relative overflow-hidden">
+
+				<div { ...useBlockProps({className: 'p-4 md:p-6 lg:p-8 bg-primary relative overflow-hidden'}) }>
 					<SectionBackground {...attributes} />
-					<Container maxWidth="xl" sx={{position: 'relative', zIndex: 10}}>
+					<Container maxWidth={'xl'} sx={{position: 'relative', zIndex: 10}}>
 						{attributes.title && 
 						<Box 
 						component="h2" 
@@ -430,7 +430,7 @@ export default function Edit({attributes, setAttributes}) {
 						</Box>
 					</Container>
 				</div>
-			</ParallaxProvider>
+	
 
 		</>
 

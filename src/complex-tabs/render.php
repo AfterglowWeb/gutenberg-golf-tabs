@@ -3,15 +3,12 @@
 $title = isset($attributes['title']) ? $attributes['title'] : '';
 $subtitle = isset($attributes['subtitle']) ? $attributes['subtitle'] : '';
 $tabs = isset($attributes['tabs']) ? $attributes['tabs'] : [];
-$block_id = isset($attributes['blockId']) ? $attributes['blockId'] : '';
+$block_id = isset($attributes['clientId']) ? $attributes['clientId'] : '';
 $background = isset($attributes['background']) ? $attributes['background'] : [];
 
 $serialized_data = wp_json_encode($attributes);
 ?>
-<script>
-	var complexTabsData = <?php echo $serialized_data; ?>;			
-</script>
-<div <?php echo get_block_wrapper_attributes(['class' => 'complex-tabs-block bg-primary-light']); ?> id="block-<?php echo esc_attr($block_id); ?>" data-uuid="<?php echo esc_attr($block_id); ?>">
+<div <?php echo get_block_wrapper_attributes(['class' => 'complex-tabs-block bg-primary']); ?>>
     
     <?php if (empty($tabs)) : ?>
         <div class="complex-tabs-empty">
@@ -194,4 +191,7 @@ $serialized_data = wp_json_encode($attributes);
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+    <script type="application/json" class="block-data">
+        <?php echo $serialized_data; ?>
+    </script>
 </div>

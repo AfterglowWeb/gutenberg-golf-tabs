@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import ParallaxMedia from './ParallaxMedia';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 export default function SectionBackground(props) {
 
@@ -14,7 +15,7 @@ export default function SectionBackground(props) {
     }
 
     return(
-        <>
+        <ParallaxProvider>
             {background.isParallax ? <>
                 {<ParallaxMedia src={background.mediaUrl} />}
             </>
@@ -28,7 +29,7 @@ export default function SectionBackground(props) {
                 </video>}
             </>}
             <div className="absolute inset-0  w-full h-full  bg-black opacity-30" />
-        </>
+        </ParallaxProvider>
     )
 
 }
