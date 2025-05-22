@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 #a0caca
 #5ac8b2
 #007a80
-#0a3d2f
+#0a3d2f // #13503f
 #e8d396
 #ebc655
 #bfb064
@@ -34,7 +34,7 @@ const theme = createTheme({
     secondary:{
       light: '#5ac8b2',
       main: '#007a80',
-      dark: '#0a3d2f',
+      dark: '#13503f',
       contrastText: '#ffffff',
     },
     info:{

@@ -5,41 +5,19 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Container from '@mui/material/Container';
 import Fab from '@mui/material/Fab';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import SectionBackground from './SectionBackground';
 import CloseIcon from '@mui/icons-material/Close';
 
 
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
+export default function FrontendTabs(props) {
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Paper sx={{ p: 3, backgroundColor: 'oklch(0.968 0.007 247.896)' }} elevation={2}>
-          {children}
-        </Paper>
-      )}
-    </div>
-  );
-}
-
-export default function FrontendTabs({ blockData }) {
-
+  const {title, subtitle, tabs, background, align} = props;
   const [activeTab, setActiveTab] = useState(0);
-  const {title, subtitle, tabs, background} = blockData;
   const [open, setOpen] = useState(false);
   
   const handleTabChange = (event, newValue) => {
@@ -53,19 +31,32 @@ export default function FrontendTabs({ blockData }) {
   if (tabs.length === 0) {
     return <div>No tabs available.</div>;
   }
+
+
+const maxWidth = () => {
+
+        if (align === 'alignfull') {
+            return false;
+        } else if (align === 'alignwide') {
+            return 'xl';
+        } else {
+            return 'xl';
+        }
+    }
+
   
   return (
   <Box 
   component="section"
-  className={`complex-tabs-block w-full overflow-hidden relative bg-slate-50 px-4 lg:px-8 pt-12 pb-18 md:pt-24 md:pb-36 bg-primary-light`}
+  className={`complex-tabs-block w-full overflow-hidden relative px-4 lg:px-8 pt-12 pb-18 md:py-36`}
   >
-    <SectionBackground {...blockData} />
-    <Container maxWidth="xl" sx={{position: 'relative', zIndex: 10}}>
+    <SectionBackground {...props} />
+    <Container maxWidth={maxWidth()} sx={{position: 'relative', zIndex: 10, px: 0}}>
 
       {(title || subtitle) && 
-      <Box className="text-center mb-8 max-w-2xl w-full mx-auto "> 
+      <Box className="text-center my-8 max-w-2xl w-full mx-auto"> 
           {title && 
-          <h3 className={`font-bold ${background?.mediaUrl ? 'text-white' : 'text-secondary'} text-3xl lg:text-[40px] lg:leading-[50px] mb-0`}>
+          <h3 className={`font-bold text-3xl ${background?.mediaUrl ? 'text-white' : 'text-secondary'}`} style={{fontSize: '30px'}}>
             {title}
           </h3>}
 
@@ -75,8 +66,8 @@ export default function FrontendTabs({ blockData }) {
       </Box>}
 
       <Box sx={({theme}) => ({
-        backgroundColor: "white",
         borderRadius: '2px',
+        overflow: 'hidden',
       })}>
 
         <Tabs
@@ -85,7 +76,14 @@ export default function FrontendTabs({ blockData }) {
           variant="scrollable"
           scrollButtons="auto"
           aria-label="complex tabs"
-          sx={{ mb: 3 }}
+          sx={{ 
+            backgroundColor: 'white',
+            borderRadius: '0px',
+            '& .MuiTabs-indicator': {
+              backgroundColor: 'secondary.main',
+              height: '3px',
+            },
+           }}
         >
           {tabs.map((tab, index) => (
             <Tab 
@@ -94,12 +92,12 @@ export default function FrontendTabs({ blockData }) {
               <Box sx={{ height:'100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span className="block">
                 {tab?.title && (
-                  <span className="block normal-case font-bold text-xl md:text-2xl lg:text-4xl text-slate-900">
+                  <span className="block normal-case font-bold text-xl md:text-2xl text-slate-900">
                   {tab.title}
                   </span>
                 )}
                 {tab?.subtitle && (
-                  <span className="block normal-case font-regular text-xl md:text-2xl lg:text-4xl text-teal-700">
+                  <span className="block normal-case font-bold text-xl md:text-2xl text-teal-700">
                   {tab.subtitle}
                   </span>
                 )}
@@ -126,26 +124,30 @@ export default function FrontendTabs({ blockData }) {
         
         {tabs.map((tab, index) => (
           <CustomTabPanel key={index} value={activeTab} index={index}>
-              <h3 className="flex justify-between pb-4">
-                <span className="block">
-                  {tab.title && <span className="block text-xl font-bold">{tab.title}</span>}
-                  {tab.subtitle && <span className="block text-2xl text-secondary font-regular">{tab.subtitle}</span>}
-                </span>
-                <span className="block">
-                  {tab.meta_1 && <span className="block text-xl font-regular">{tab.meta_1}</span>}
-                  {tab.meta_2 && <span className="block text-xl font-regular">{tab.meta_2}</span>}
-                </span>
-              </h3>
               
-              <div className="flex justify-start flex-wrap border-y border-slate-50">
-                <div className="w-full md:w-1/2 p-2 flex flex-col gap-4 justify-between">
+              <div className="block w-full md:flex justify-start flex-wrap">
+                
+                <div className={`w-full p-2 md:p-4 ${tab.mediaUrl && 'md:w-1/2'}`}>
+                
+                  <h3 className="block md:flex items-center mb-2 gap-4">
+                    <span className="block md:flex gap-2 items-end">
+                      {tab.title && <span className="block text-2xl font-bold">{tab.title}</span>}
+                      {tab.subtitle && <span className="block text-2xl text-secondary font-bold">{tab.subtitle}</span>}
+                    </span>
+                    <span className="block md:flex gap-2 items-center">
+                      {tab.meta_1 && <span className="block text-xl font-regular">{tab.meta_1}</span>}
+                      {tab.meta_2 && <span className="block text-xl font-regular">{tab.meta_2}</span>}
+                    </span>
+                  </h3>
+
                   <div dangerouslySetInnerHTML={{ __html: tab.content }} />
+                  
                   {tab.starts && Object.values(tab.starts).some(val => val !== 0) && (
                     <div>
                       <h3 className="py-4">
                         <span className="block text-lg font-bold">Départs</span>
                       </h3>
-                      <div className="flex gap-2 font-regular text-sm">
+                      <div className="flex flex-wrap gap-2 font-regular text-sm">
                         {tab.starts.white > 0 && (
                           <span className="block w-10 p-1 text-center rounded-lg border-2 border-solid border-slate-200 bg-white">
                             {tab.starts.white}
@@ -178,34 +180,31 @@ export default function FrontendTabs({ blockData }) {
                     </div>
                   )}
                 </div>
-                
-                <div className="w-full md:w-1/2 p-2">
-                  <div className="aspect-video">
-                    {tab.mediaUrl && (
-                      <div 
-                      className="relative cursor-pointer"
-                      onClick={() => setOpen(true)}
+
+                {tab.mediaUrl &&
+                  <div className="w-full md:w-1/2 p-2 md:p-4">
+                    <div 
+                    className="relative cursor-pointer aspect-4/3 overflow-hidden"
+                    onClick={() => setOpen(true)}
+                    >
+                      <img 
+                        src={tab.mediaUrl} 
+                        alt={tab.title || ''} 
+                        className="object-cover h-full w-full aspect-4/3" 
+                      />
+                      <Fab 
+                        color="primary" 
+                        size="small"
+                        sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10, textTransform:'capitalize'}}
                       >
-                        <img 
-                          src={tab.mediaUrl} 
-                          alt={tab.title || ''} 
-                          className="aspect-video object-cover" 
-                        />
-                        <Fab 
-                          color="primary" 
-                          size="small"
-                          sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10, textTransform:'capitalize'}}
-                        >
-                          <AddIcon />
-                        </Fab>
-                      </div>)
-                    }
+                        <AddIcon />
+                      </Fab>
                     </div>
                     <Dialog
-                      open={open}
-                      onClose={() => setOpen(false)}
-                      keepMounted={true}
-                      fullScreen={true}
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    keepMounted={true}
+                    fullScreen={true}
                     >
                       <DialogTitle sx={{display: 'flex', flexWrap:'wrap', justifyContent: 'space-between', alignItems: 'center'}}>
                         <span className="block overflow-hidden truncate">{tab.title} {tab.subtitle}</span>
@@ -220,7 +219,8 @@ export default function FrontendTabs({ blockData }) {
                       </DialogContent>
                       <DialogActions />
                     </Dialog>
-                </div>
+                  </div>
+                }
               </div>
           </CustomTabPanel>
         ))}
@@ -229,5 +229,29 @@ export default function FrontendTabs({ blockData }) {
       
     </Container>
   </Box>
+  );
+}
+
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Paper sx={{ 
+          p: {xs:1, md:3}, 
+          borderRadius:0,
+          }} elevation={2}>
+          {children}
+        </Paper>
+      )}
+    </div>
   );
 }
