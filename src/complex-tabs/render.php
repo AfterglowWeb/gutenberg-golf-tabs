@@ -15,7 +15,7 @@ $serialized_data = wp_json_encode($attributes);
             <?php esc_html_e('No tabs available.', 'complex-tabs'); ?>
         </div>
     <?php else : ?>
-        <div class="container mx-auto xl:max-w-screen-xl">
+        <div class="container">
 
             <!-- Background Image -->
             <?php if ( !empty($background) ) : ?>
