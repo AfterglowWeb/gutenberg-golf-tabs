@@ -19,8 +19,6 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
-    --breakpoint-xl: 80rem;
-    --container-2xl: 42rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-lg: 1.125rem;
@@ -252,12 +250,6 @@
       max-width: 96rem;
     }
   }
-  .mx-auto {
-    margin-inline: auto;
-  }
-  .my-8 {
-    margin-block: calc(var(--spacing) * 8);
-  }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
@@ -329,9 +321,6 @@
   }
   .w-full {
     width: 100%;
-  }
-  .max-w-2xl {
-    max-width: var(--container-2xl);
   }
   .shrink {
     flex-shrink: 1;
@@ -482,14 +471,8 @@
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
-  .pt-12 {
-    padding-top: calc(var(--spacing) * 12);
-  }
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
-  }
-  .pb-18 {
-    padding-bottom: calc(var(--spacing) * 18);
   }
   .text-center {
     text-align: center;
@@ -607,11 +590,6 @@
       padding: calc(var(--spacing) * 6);
     }
   }
-  .md\:py-36 {
-    @media (width >= 48rem) {
-      padding-block: calc(var(--spacing) * 36);
-    }
-  }
   .md\:text-2xl {
     @media (width >= 48rem) {
       font-size: var(--text-2xl);
@@ -629,11 +607,6 @@
       padding: calc(var(--spacing) * 8);
     }
   }
-  .lg\:px-8 {
-    @media (width >= 64rem) {
-      padding-inline: calc(var(--spacing) * 8);
-    }
-  }
   .lg\:text-5xl {
     @media (width >= 64rem) {
       font-size: var(--text-5xl);
@@ -649,11 +622,6 @@
     @media (width >= 64rem) {
       --tw-leading: 50px;
       line-height: 50px;
-    }
-  }
-  .xl\:max-w-screen-xl {
-    @media (width >= 80rem) {
-      max-width: var(--breakpoint-xl);
     }
   }
 }
