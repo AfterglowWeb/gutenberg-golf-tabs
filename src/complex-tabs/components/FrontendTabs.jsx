@@ -12,6 +12,7 @@ import DialogActions from '@mui/material/DialogActions';
 import AddIcon from '@mui/icons-material/Add';
 import SectionBackground from './SectionBackground';
 import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
 
 
 export default function FrontendTabs(props) {
@@ -25,40 +26,45 @@ export default function FrontendTabs(props) {
   };
 
   if (!tabs) {
-    return <div>No tabs available.</div>;
+    return <div>Pas d'onglets configurés.</div>;
   }
   
   if (tabs.length === 0) {
-    return <div>No tabs available.</div>;
+    return <div>Pas d'onglets configurés.</div>;
   }
-
-
-const maxWidth = () => {
-
-        if (align === 'alignfull') {
-            return false;
-        } else if (align === 'alignwide') {
-            return 'xl';
-        } else {
-            return 'xl';
-        }
-    }
 
   
   return (
   <Box 
   component="section"
-  className={`complex-tabs-block w-full overflow-hidden relative px-4 lg:px-8 pt-12 pb-18 md:py-36`}
+  sx={{
+    backgroundColor: 'var(--wp--preset--color--secondary-dark)',
+    textAlign: align || 'center',
+    position: 'relative',
+    overflow: 'hidden',
+    my:{ xs: 4, lg: 0 },
+    py: { xs: 6, lg: 12 },
+    px: { xs: 0, lg: 'var(--wp--preset--spacing--t-gutter)' }
+  }}
   >
     <SectionBackground {...props} />
-    <Container maxWidth={maxWidth()} sx={{position: 'relative', zIndex: 10, px: 0}}>
+    <Container maxWidth={false} disableGutters={true} sx={{position: 'relative', zIndex: 10, px: 0}}>
 
       {(title || subtitle) && 
-      <Box className="text-center my-8 max-w-2xl w-full mx-auto"> 
+      <Box className="text-center w-full"> 
           {title && 
-          <h3 className={`font-bold text-3xl ${background?.mediaUrl ? 'text-white' : 'text-secondary'}`} style={{fontSize: '30px'}}>
+          <Typography 
+          comonent="h3" 
+          sx={{
+            color: 'white',
+            fontWeight: 700,
+            fontFamily: 'var(--wp--preset--font-family--theme-bold)',
+            fontSize: 'var(--wp--preset--font-size--xxxxx-large)',
+            px: {xs: 6, lg: 0},
+            pb: 2,
+            }}>
             {title}
-          </h3>}
+          </Typography>}
 
           {subtitle && <p className="font-bold text-xl text-[30px] mb-0">
               <strong>{subtitle}</strong>
@@ -75,7 +81,7 @@ const maxWidth = () => {
           onChange={handleTabChange}
           variant="scrollable"
           scrollButtons="auto"
-          aria-label="complex tabs"
+          allowScrollButtonsMobile={true}
           sx={{ 
             backgroundColor: 'white',
             borderRadius: '0px',
